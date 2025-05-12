@@ -14,6 +14,7 @@ jobs:
             - name: "Configurando o user no git"
               run:
                 echo "Configurando o git user.name"
+                edasdjaodajksdjaskd
     construir:
         runs-on: ubuntu-24.04
         needs:
