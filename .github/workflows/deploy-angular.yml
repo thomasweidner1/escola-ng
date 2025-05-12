@@ -23,7 +23,7 @@ jobs:
             - name: Instalar Angular CLI
               run: npm install --global @angular/cli
             - name: Build - gerar o fonte de produção
-              run: ng build --configuration production --base-href=/.../
+              run: ng build --configuration production --base-href=/escola-ng/
             - name: Listar arquivos e pastas
               run: |
                 ls -la
