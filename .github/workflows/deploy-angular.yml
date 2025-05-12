@@ -8,11 +8,11 @@ jobs:
         runs-on: ubuntu-latest
         steps:
             - name: "Configurar o git na pipeline"
-              run:
+              run: |
                 echo "Configurando o git na pipeline"
                 echo "Configurado o git com sucesso"
             - name: "Configurando o user no git"
-              run:
+              run: |
                 echo "Configurando o git user.name"
                 edasdjaodajksdjaskd
     construir:
