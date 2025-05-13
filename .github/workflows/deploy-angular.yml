@@ -21,7 +21,12 @@ jobs:
               run: npm install --global @angular/cli
             - name: Build - gerar o fonte de produção
               run: ng build --configuration production --base-href=/escola-ng/
-    construir:
+            - name: Salvar a pasta dist como artefato
+              uses: actions/upload-artifact@v4
+              with:
+                name: build-artifact
+                path: dist/
+    deploy:
         runs-on: ubuntu-24.04
         needs: [build]
         steps:
