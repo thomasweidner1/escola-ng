@@ -40,5 +40,13 @@ jobs:
               with:
                 name: build-artifact
                 path: ./dist
-            - name: Listar arquivos
-              run: ls -la
+            - name: Configurar Git
+              run: |
+                git config user.name "Thomas Johannes David Weidner"
+                git config user.email "thomas.jdweidner@gmail.com"
+                npm install --global angular-cli-ghpages
+            - name: Deploy to Github Pages
+              run: npx angula-cli-ghpages --dir=dist/escola-ng/browser --no-silent
+              env:
+                cli: true
+                GH_TOKEN: ${{ secrets.TOKEN_TO_DEPLOY }}
