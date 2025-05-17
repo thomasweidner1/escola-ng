@@ -10,7 +10,12 @@ import { ConfirmDialog } from 'primeng/confirmdialog';
 
 @Component({
   selector: 'app-cursos-lista',
-  imports: [TableModule, CommonModule, ButtonModule, ToastModule, ConfirmDialog],
+  imports: [
+    TableModule, 
+    CommonModule, 
+    ButtonModule, 
+    ToastModule, 
+    ConfirmDialog],
   templateUrl: './cursos-lista.component.html',
   styleUrl: './cursos-lista.component.css',
   providers: [MessageService, ConfirmationService]

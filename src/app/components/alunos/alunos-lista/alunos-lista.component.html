@@ -1,0 +1,67 @@
+<p-toast />
+<p-confirmdialog />
+
+<div class="flex justify-content-end mb-2">
+    <p-button label="Novo Aluno" icon="pi pi-plus" (click)="abrirModalCadastrar()"></p-button>
+</div>
+
+<p-table [value]="alunos" showGridlines stripedRows [tableStyle]="{ 'min-width': '50rem' }">
+    <ng-template #header>
+        <tr>
+            <th>Código</th>
+            <th>Nome Completo</th>
+            <th>CPF</th>
+            <th>Data de Nascimento</th>
+            <th>Ação</th>
+        </tr>
+    </ng-template>
+    <ng-template #body let-aluno>
+        <tr>
+            <td>{{ aluno.id }}</td>
+            <td>{{ aluno.nome + " " + aluno.sobrenome}}</td>
+            <td>{{ aluno.cpf | formatarCpf}}</td>
+            <td>{{ aluno.dataNascimento | dataHoraCustomizada }}</td>
+            <td>
+                <p-button label="Editar" severity="warn" class="mr-2" icon="pi pi-pencil"></p-button>
+                <p-button label="Apagar" (click)="confirm1($event)" severity="danger" icon="pi pi-trash"></p-button>
+            </td>
+        </tr>
+    </ng-template>
+</p-table>
+
+<p-dialog header="Cadastro" [modal]="true" [(visible)]="visible" [style]="{ width: '25rem' }">
+
+    <div class="flex items-center gap-4 mb-2">
+        <label for="campo-nome" class="font-semibold flex-auto">Nome</label>
+        <input pInputText id="campo-nome" class="flex-auto" autocomplete="off" [(ngModel)]="alunoCadastro.nome" />
+    </div>
+
+    <div class="flex items-center gap-4 mb-2">
+        <label for="campo-sobrenome" class="font-semibold flex-auto">Sobrenome</label>
+        <input pInputText id="campo-sobrenome" class="flex-auto" autocomplete="off" [(ngModel)]="alunoCadastro.sobrenome" />
+    </div>
+    
+    <div class="flex items-center gap-4 mb-2">
+        <label for="campo-cpf" class="font-semibold flex-auto">CPF</label>
+        <p-inputmask mask="999.999.999-99" [(ngModel)]="alunoCadastro.cpf" placeholder="000.000.000-00"/>
+    </div>
+    
+    <div class="flex items-center gap-4 mb-2">
+        <label for="campo-data-nascimento" class="font-semibold flex-auto">Data de Nascimento</label>
+         <p-datepicker [(ngModel)]="alunoCadastro.dataNascimento" 
+         dateFormat="dd/mm/yy"
+         appendTo="body"
+         [minDate]="dataMinima"
+         [maxDate]="dataMaxima" 
+         [readonlyInput]="true"
+          />
+    </div>
+    
+
+
+    <div class="flex justify-end justify-content-end gap-2">
+        <p-button label="Cancelar" severity="secondary" icon="pi pi-times" (click)="visible = false" />
+        <p-button label="Salvar" icon="pi pi-save" (click)="visible = false" />
+    </div>
+
+</p-dialog>
