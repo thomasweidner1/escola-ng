@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Aluno } from '../../../models/aluno';
 import { ButtonModule } from 'primeng/button';
 import { FormsModule } from '@angular/forms';
@@ -14,6 +14,7 @@ import { ToastModule } from 'primeng/toast';
 import { AlunoCadastro } from '../../../models/aluno-cadastro';
 import { InputMaskModule } from 'primeng/inputmask';
 import { DatePickerModule } from 'primeng/datepicker';
+import { AlunoService } from '../../../services/aluno.service';
 
 @Component({
   selector: 'app-alunos-lista',
@@ -37,25 +38,24 @@ import { DatePickerModule } from 'primeng/datepicker';
     DatePipe,
     FormatarCpfPipe,
     MessageService,
-    ConfirmationService
+    ConfirmationService,
+    AlunoService,
   ]
 })
-export class AlunosListaComponent {
+export class AlunosListaComponent implements OnInit {
   alunos: Aluno[];
-  
   alunoCadastro: AlunoCadastro; // objeto que será utilizada na dialog(modal) para cadastrar
-
   visible: boolean = false;
-
+  carregandoAlunos: boolean = false;
   dataMaxima: Date;
   dataMinima: Date;
 
 
-  constructor(private confirmationService: ConfirmationService, private messageService: MessageService) {
-    this.alunos = [
-      new Aluno("Matheus", "da Silva", new Date(2000, 4, 5), 1, "92134567899"),
-      new Aluno("Maria", "Da Silva", new Date(2000, 4, 5), 1, '921.345.678-99')
-    ]
+  constructor(
+    private confirmationService: ConfirmationService, private messageService: MessageService,
+    private alunoService: AlunoService,
+  ) {
+    this.alunos = []
 
     let dataHoraAgora = new Date(Date.now());
 
@@ -64,6 +64,20 @@ export class AlunosListaComponent {
     this.dataMinima = new Date(1900, 0, 1);
     this.dataMaxima = new Date(dataHoraAgora.getFullYear(), dataHoraAgora.getMonth(), dataHoraAgora.getDay());
 
+  }
+
+  ngOnInit(): void {
+    this.carregarAlunos();
+  }
+
+  private carregarAlunos() {
+    this.carregandoAlunos = true;
+    // fazer a requisição para o back-end
+    this.alunoService.obterTodos().subscribe({
+      next: alunos => this.alunos = alunos,
+      error: erro => console.log("Ocorreu um erro ao carregar a lista de alunos:" + erro),
+      complete: () => this.carregandoAlunos = false
+    });
   }
 
   abrirModalCadastrar() {
@@ -98,5 +112,16 @@ export class AlunosListaComponent {
         });
       },
     });
+  }
+
+  cadastrar(){
+    this.alunoService.cadastrar(this.alunoCadastro).subscribe({
+      next: aluno => alert("Aluno cadastrado com sucesso"),
+      error: erro => console.log("Ocorreu um erro ao cadastrar o aluno:" + erro),
+    })
+  }
+
+  apresentarMensagemCadastrado(){
+    
   }
 }

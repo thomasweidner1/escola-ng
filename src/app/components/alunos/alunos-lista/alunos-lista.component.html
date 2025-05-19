@@ -5,7 +5,14 @@
     <p-button label="Novo Aluno" icon="pi pi-plus" (click)="abrirModalCadastrar()"></p-button>
 </div>
 
-<p-table [value]="alunos" showGridlines stripedRows [tableStyle]="{ 'min-width': '50rem' }">
+<p-table [value]="alunos" 
+    [paginator]="true"
+    [loading]="carregandoAlunos"
+    [rows]="5"
+    [rowsPerPageOptions]="[5, 10, 20]"
+    showGridlines 
+    stripedRows 
+    [tableStyle]="{ 'min-width': '50rem' }">
     <ng-template #header>
         <tr>
             <th>Código</th>
@@ -61,7 +68,7 @@
 
     <div class="flex justify-end justify-content-end gap-2">
         <p-button label="Cancelar" severity="secondary" icon="pi pi-times" (click)="visible = false" />
-        <p-button label="Salvar" icon="pi pi-save" (click)="visible = false" />
+        <p-button label="Salvar" icon="pi pi-save" (click)="cadastrar()" />
     </div>
 
 </p-dialog>
