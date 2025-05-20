@@ -45,11 +45,12 @@ import { AlunoService } from '../../../services/aluno.service';
 export class AlunosListaComponent implements OnInit {
   alunos: Aluno[];
   alunoCadastro: AlunoCadastro; // objeto que será utilizada na dialog(modal) para cadastrar
-  visible: boolean = false;
+  dialogVisivelCadastrarEditar: boolean = false;
+  dialogTituloCadastrarEditar?: string;
+  idAlunoEditar?: number;
   carregandoAlunos: boolean = false;
   dataMaxima: Date;
   dataMinima: Date;
-
 
   constructor(
     private confirmationService: ConfirmationService, private messageService: MessageService,
@@ -58,11 +59,10 @@ export class AlunosListaComponent implements OnInit {
     this.alunos = []
 
     let dataHoraAgora = new Date(Date.now());
-
     this.alunoCadastro = new AlunoCadastro;
     
     this.dataMinima = new Date(1900, 0, 1);
-    this.dataMaxima = new Date(dataHoraAgora.getFullYear(), dataHoraAgora.getMonth(), dataHoraAgora.getDay());
+    this.dataMaxima = new Date(dataHoraAgora.getFullYear(), dataHoraAgora.getMonth(), dataHoraAgora.getDate(), 23, 59, 59);
 
   }
 
@@ -81,10 +81,25 @@ export class AlunosListaComponent implements OnInit {
   }
 
   abrirModalCadastrar() {
-    this.visible = true;
+    this.dialogTituloCadastrarEditar = "Cadastro de Aluno";
+    this.dialogVisivelCadastrarEditar = true;
+    this.idAlunoEditar = undefined
+    this.alunoCadastro = new AlunoCadastro();
   }
 
-  confirm1(event: Event) {
+  abrirModalEditar(aluno: Aluno) {
+    this.dialogTituloCadastrarEditar = `Editar Aluno - ${aluno.nome.toString()} ${aluno.sobrenome.toString()}`;
+    this.alunoCadastro =  new AlunoCadastro;
+    this.alunoCadastro.nome = aluno.nome;
+    this.alunoCadastro.sobrenome = aluno.sobrenome;
+    this.alunoCadastro.cpf = aluno.cpf;
+    this.alunoCadastro.dataNascimento = new Date(aluno.dataNascimento!);
+    this.idAlunoEditar = aluno.id;
+    
+    this.dialogVisivelCadastrarEditar = true;
+  }
+
+  confirm1(event: Event, alunoId: number) {
     this.confirmationService.confirm({
       target: event.target as EventTarget,
       message: 'Deseja realmente apagar?',
@@ -98,30 +113,71 @@ export class AlunosListaComponent implements OnInit {
         outlined: true,
       },
       acceptButtonProps: {
-        label: 'Confirmar',
+        label: 'Deletar',
+        severity: 'danger'
       },
-      accept: () => {
-        this.messageService.add({ severity: 'info', summary: 'Confirmed', detail: 'You have accepted' });
-      },
-      reject: () => {
-        this.messageService.add({
-          severity: 'error',
-          summary: 'Rejected',
-          detail: 'You have rejected',
-          life: 3000,
-        });
-      },
+      accept: () => this.apagar(alunoId)
     });
+  }
+  
+  private apagar(alunoId: number){
+    this.alunoService.apagar(alunoId).subscribe({
+      next: () =>  this.apresentarMensagemApagado(),
+      error: erro => console.log(`Ocorreu um erro ao apagar o aluno: ${erro}`),
+    })
+  }
+
+  private apresentarMensagemApagado(){
+    this.messageService.add({ severity: 'danger', summary: 'Confirmado', detail: 'Aluno removido com sucesso' });
+    this.carregarAlunos();
   }
 
   cadastrar(){
     this.alunoService.cadastrar(this.alunoCadastro).subscribe({
-      next: aluno => alert("Aluno cadastrado com sucesso"),
+      next: aluno => this.apresentarMensagemCadastrado(),
       error: erro => console.log("Ocorreu um erro ao cadastrar o aluno:" + erro),
     })
   }
 
-  apresentarMensagemCadastrado(){
-    
+  private apresentarMensagemCadastrado(){
+    this.dialogVisivelCadastrarEditar = false
+    this.alunoCadastro = new AlunoCadastro();
+    this.carregarAlunos();
+    this.messageService.add({ severity: 'success', summary: 'Successo!', detail: 'Aluno cadastrado com sucesso' });
   }
+
+  salvar(){
+    if(this.idAlunoEditar === undefined)
+      this.cadastrar();
+    else
+      this.editar();
+  }
+
+  private editar(){
+    this.alunoService.alterar(this.idAlunoEditar!, this.alunoCadastro).subscribe({
+      next: aluno => this.apresentarMensagemEditado(),
+      error: erro => console.log(`Ocorreu um erro ao editar o aluno: ${erro}`)
+    })
+  }
+
+  private apresentarMensagemEditado(){
+    this.messageService.add({ severity: 'success', summary: 'Confirmado', detail: 'Aluno alterado com sucesso' });
+    this.dialogVisivelCadastrarEditar = false
+    this.idAlunoEditar = undefined;
+    this.alunoCadastro = new AlunoCadastro();
+    this.carregarAlunos();
+  }
+
 }
+
+/* HTTP METHODS:
+  get => consultar um item em específico ou uma lista de itens
+  post => criar um item
+  delete => apagar um item específico
+  put => alterar um registro
+
+  200 => ok
+  201 => created (criado)
+  204 => no content => back-end n trouxe nenhum conteúdo, ok a parada
+  404 => não encontrado
+*/
