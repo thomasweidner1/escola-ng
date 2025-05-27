@@ -6,17 +6,46 @@ import { FloatLabelModule } from 'primeng/floatlabel';
 import { InputMaskModule } from 'primeng/inputmask';
 import { ButtonModule } from 'primeng/button';
 import { ConfirmationService, MessageService } from 'primeng/api';
+import { ToastModule } from 'primeng/toast';
+import { CursoService } from '../../../services/curso.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-curso-cadastro',
-  imports: [FormsModule, InputTextModule, FloatLabelModule, InputMaskModule, ButtonModule],
+  imports: [
+    FormsModule, 
+    InputTextModule, 
+    FloatLabelModule, 
+    InputMaskModule, 
+    ButtonModule,
+    ToastModule,
+  ],
+  providers: [MessageService],
   templateUrl: './curso-cadastro.component.html',
   styleUrl: './curso-cadastro.component.css',
-  providers: [MessageService, ConfirmationService]
 })
 export class CursoCadastroComponent {
 
-  curso = new CursoCadastro;
+  curso: CursoCadastro;
+
+  constructor(
+    private router: Router,
+    private cursoService: CursoService,
+    private messageService: MessageService,
+  ){
+    this.curso = new CursoCadastro
+  }
+
+  cadastrar(){
+    this.cursoService.cadastrar(this.curso).subscribe({
+      next: aluno => this.apresentarMensagemCadastrado(),
+      error: erro => console.log("OCorreu um erro ao cadastrar o aluno:" + erro)
+    });
+  }
+  apresentarMensagemCadastrado(): void {
+    this.messageService.add({severity: 'succes', summary: 'Sucesso', detail:'Curso cadastrado com sucesso'});
+    this.router.navigate(["/cursos"]);
+  }
 
 
 }

@@ -27,7 +27,7 @@
                 <td>{{ curso.sigla }}</td>
                 <td>
                     <p-button label="Editar" severity="warn" class="mr-2" icon="pi pi-pencil"></p-button>
-                    <p-button label="Apagar" (click)="confirm1($event)" severity="danger" icon="pi pi-trash" ></p-button>
+                    <p-button label="Apagar" (click)="confirmarParaApagar($event, curso.id)" severity="danger" icon="pi pi-trash" ></p-button>
                 </td>
             </tr>
         </ng-template>
