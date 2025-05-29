@@ -1,0 +1,24 @@
+<div class="card">
+    <p-table [value]="professores" stripedRows [tableStyle]="{'min-width': '50rem'}">
+        <ng-template #header>
+            <tr>
+                <th>Code</th>
+                <th>Name</th>
+                <th>Category</th>
+                <th>Quantity</th>
+            </tr>
+        </ng-template>
+        <ng-template #body let-professores>
+            <tr>
+                <td>{{professores.id}}</td>
+                <td>{{professores.nome}}</td>
+                <td>{{professores.cnpj}}</td>
+                <td>{{professores.dataNascimento}}</td>
+                <td>{{professores.nomeFantasia}}</td>
+                <td>{{professores.formacao}}</td>
+                <td>{{professores.chavePix}}</td>
+                <td>{{professores.signo}}</td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>
