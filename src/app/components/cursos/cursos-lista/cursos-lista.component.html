@@ -26,7 +26,7 @@
                 <td>{{ curso.nome }}</td>
                 <td>{{ curso.sigla }}</td>
                 <td>
-                    <p-button label="Editar" severity="warn" class="mr-2" icon="pi pi-pencil"></p-button>
+                    <p-button label="Editar" (click)="redirecionarPaginaEditar(curso.id)" severity="warn" class="mr-2" icon="pi pi-pencil"></p-button>
                     <p-button label="Apagar" (click)="confirmarParaApagar($event, curso.id)" severity="danger" icon="pi pi-trash" ></p-button>
                 </td>
             </tr>

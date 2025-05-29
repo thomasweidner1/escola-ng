@@ -39,7 +39,7 @@ export class CursoCadastroComponent {
   cadastrar(){
     this.cursoService.cadastrar(this.curso).subscribe({
       next: aluno => this.apresentarMensagemCadastrado(),
-      error: erro => console.log("OCorreu um erro ao cadastrar o aluno:" + erro)
+      error: erro => console.log("Ocorreu um erro ao cadastrar o aluno:" + erro)
     });
   }
   apresentarMensagemCadastrado(): void {

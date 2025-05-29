@@ -128,7 +128,7 @@ export class AlunosListaComponent implements OnInit {
   }
 
   private apresentarMensagemApagado(){
-    this.messageService.add({ severity: 'danger', summary: 'Confirmado', detail: 'Aluno removido com sucesso' });
+    this.messageService.add({ severity: 'success', summary: 'Confirmado', detail: 'Aluno removido com sucesso' });
     this.carregarAlunos();
   }
 
@@ -143,7 +143,7 @@ export class AlunosListaComponent implements OnInit {
     this.dialogVisivelCadastrarEditar = false
     this.alunoCadastro = new AlunoCadastro();
     this.carregarAlunos();
-    this.messageService.add({ severity: 'success', summary: 'Successo!', detail: 'Aluno cadastrado com sucesso' });
+    this.messageService.add({ severity: 'success', summary: 'Confirmado', detail: 'Aluno cadastrado com sucesso' });
   }
 
   salvar(){

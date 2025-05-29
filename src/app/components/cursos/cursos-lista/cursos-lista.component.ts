@@ -12,10 +12,10 @@ import { CursoService } from '../../../services/curso.service';
 @Component({
   selector: 'app-cursos-lista',
   imports: [
-    TableModule, 
-    CommonModule, 
-    ButtonModule, 
-    ToastModule, 
+    TableModule,
+    CommonModule,
+    ButtonModule,
+    ToastModule,
     ConfirmDialog],
   templateUrl: './cursos-lista.component.html',
   styleUrl: './cursos-lista.component.css',
@@ -27,10 +27,10 @@ export class CursosListaComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private confirmationService: ConfirmationService, 
+    private confirmationService: ConfirmationService,
     private messageService: MessageService,
     private cursoService: CursoService,
-  ){
+  ) {
     this.cursos = []
   }
 
@@ -42,45 +42,50 @@ export class CursosListaComponent implements OnInit {
     this.carregandoCursos = true;
     this.cursoService.obterTodos().subscribe({
       next: curso => this.cursos = curso,
-      error: erro => console.log(`Ocorreu um erro ao carregar a lista de cursos: ${erro}`),
+      error: erro => console.log(
+        `Ocorreu um erro ao carregar a lista de cursos: ${erro}`),
       complete: () => this.carregandoCursos = false,
     });
   }
 
-  redirecionarPaginaCadastro(){
+  redirecionarPaginaCadastro() {
     this.router.navigate(["/cursos/cadastro"]);
   }
 
+  redirecionarPaginaEditar(id: number) {
+    this.router.navigate([`/cursos/editar/${id}`]);
+  }
 
-   confirmarParaApagar(event: Event, id: number) {
-        this.confirmationService.confirm({
-            target: event.target as EventTarget,
-            message: 'Deseja realmente apagar?',
-            header: 'CUIDADO',
-            closable: true,
-            closeOnEscape: true,
-            icon: 'pi pi-exclamation-triangle',
-            rejectButtonProps: {
-                label: 'Cancelar',
-                severity: 'secondary',
-                outlined: true,
-            },
-            acceptButtonProps: {
-                label: 'Apagar',
-                severity: 'danger'
-            },
-            accept: () => this.apagar(id)
-        });
-    }
 
-  private apagar(id: number){
-    this,this.cursoService.apagar(id).subscribe({
+  confirmarParaApagar(event: Event, id: number) {
+    this.confirmationService.confirm({
+      target: event.target as EventTarget,
+      message: 'Deseja realmente apagar?',
+      header: 'CUIDADO',
+      closable: true,
+      closeOnEscape: true,
+      icon: 'pi pi-exclamation-triangle',
+      rejectButtonProps: {
+        label: 'Cancelar',
+        severity: 'secondary',
+        outlined: true,
+      },
+      acceptButtonProps: {
+        label: 'Apagar',
+        severity: 'danger'
+      },
+      accept: () => this.apagar(id)
+    });
+  }
+
+  private apagar(id: number) {
+    this, this.cursoService.apagar(id).subscribe({
       next: () => this.apresentarMensagemApagado(),
       error: erro => console.log(`Ocorreu um erro ao apagar o curos: ${erro}`),
     })
   }
 
-  private apresentarMensagemApagado(){
+  private apresentarMensagemApagado() {
     this.messageService.add({
       severity: 'success',
       summary: 'Sucesso',
