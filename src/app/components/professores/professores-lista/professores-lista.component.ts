@@ -59,11 +59,11 @@ export class ProfessoresListaComponent {
     });
   }
 
-    redirecionarPaginaCadastro() {
+  paginaCadastro() {
     this.router.navigate(["/professores/cadastro"]);
   }
 
-  redirecionarPaginaEditar(id: number) {
+  paginaEditar(id: number) {
     this.router.navigate([`/professores/editar/${id}`]);
   }
 
@@ -100,7 +100,8 @@ export class ProfessoresListaComponent {
     this.messageService.add({ severity: 'success', summary: 'Confirmado', detail: 'Aluno removido com sucesso' });
     this.carregarProfessores();
   }
-
   
+  
+
 }
 

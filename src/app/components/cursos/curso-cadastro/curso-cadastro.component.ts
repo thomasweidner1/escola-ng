@@ -5,7 +5,7 @@ import { CursoCadastro } from '../../../models/curso-cadastro';
 import { FloatLabelModule } from 'primeng/floatlabel';
 import { InputMaskModule } from 'primeng/inputmask';
 import { ButtonModule } from 'primeng/button';
-import { ConfirmationService, MessageService } from 'primeng/api';
+import { MessageService } from 'primeng/api';
 import { ToastModule } from 'primeng/toast';
 import { CursoService } from '../../../services/curso.service';
 import { Router } from '@angular/router';

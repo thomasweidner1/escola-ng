@@ -26,22 +26,23 @@ import { ProfessorService } from '../../../../services/professor.service';
 })
 export class ProfessoresCadastroComponent {
   
-//  professor: ProfessorCadastro;
+  professor: ProfessorCadastro;
 
   constructor(
     private professorService: ProfessorService,
     private messageService: MessageService,
     private router: Router
   ) {
-    //this.professor = new ProfessorCadastro
+    this.professor = new ProfessorCadastro();
   }
 
-  // cadastrar() {
-  //   this.professorService.cadastrar(this.professor).subscribe({
-  //     next: () => this.apresentarMensagemCadastrado(),
-  //     error: erro => console.log("Ocorreu um erro ao cadastrar o professor: " + erro)
-  //   });
-  // }
+  cadastrar() {
+    this.professorService.cadastrar(this.professor).subscribe({
+      next: () => this.apresentarMensagemCadastrado(),
+      error: erro => console.log("Ocorreu um erro ao cadastrar o professor: " + erro)
+    });
+  }
+
   apresentarMensagemCadastrado(): void {
     this.messageService.add({ severity: 'success', summary: 'Sucesso', detail: 'Professor cadastrado com sucesso' });
     this.router.navigate(["/professores"]);
