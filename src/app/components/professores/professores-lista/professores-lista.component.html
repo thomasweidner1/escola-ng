@@ -27,7 +27,7 @@
             <tr>
                 <td>{{professor.id}}</td>
                 <td>{{professor.nome}}</td>
-                <td>{{professor.cnpj}}</td>
+                <td>{{professor.cnpj | formatarCnpj}}</td>
                 <td>{{professor.dataNascimento | dataHoraCustomizada}} </td>
                 <td>{{professor.nomeFantasia}}</td>
                 <td>{{professor.formacao}}</td>
