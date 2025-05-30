@@ -11,6 +11,7 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 import { DataHoraCustomizadaPipe } from '../../../pipes/data-hora-customizada.pipe';
 import { DatePipe } from '@angular/common';
 import { Router } from '@angular/router';
+import { FormatarCnpjPipe } from '../../../pipes/formatar-cnpj.pipe';
 
 @Component({
   selector: 'app-professores-lista',
@@ -21,7 +22,8 @@ import { Router } from '@angular/router';
     InputTextModule,
     ToastModule,
     ConfirmDialogModule,
-    DataHoraCustomizadaPipe
+    DataHoraCustomizadaPipe,
+    FormatarCnpjPipe
   ],
   providers: [
     ConfirmationService,
@@ -29,6 +31,7 @@ import { Router } from '@angular/router';
     ProfessorService,
     DataHoraCustomizadaPipe,
     DatePipe,
+    FormatarCnpjPipe
   ],
   templateUrl: './professores-lista.component.html',
   styleUrl: './professores-lista.component.css'
