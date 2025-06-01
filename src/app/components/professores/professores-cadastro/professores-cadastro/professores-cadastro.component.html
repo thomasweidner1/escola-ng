@@ -1,1 +1,50 @@
 
+<div class="flex justify-content-center">
+    <div class="flex flex-column gap-3 align-items-center w-full max-w-30rem">
+        <p-floatlabel variant="in">
+            <input pInputText id="campo-nome" [(ngModel)]="professor.nome" autocomplete="off" minlength="3" maxlength="50" />
+            <label for="campo-nome">Nome Completo</label>
+        </p-floatlabel>
+        
+        <p-floatlabel variant="in">
+            <p-inputmask id="campo-cnpj" [(ngModel)]="professor.cnpj" autocomplete="off" mask="99.999.999/9999-99" />
+            <label for="campo-cnpj">CNPJ</label>
+        </p-floatlabel>
+        
+        <p-floatlabel variant="in">
+            <input pInputText id="campo-nome-fantasia" [(ngModel)]="professor.nomeFantasia" autocomplete="off" />
+            <label for="campo-nome-fantasia">Nome Fantasia</label>
+        </p-floatlabel>
+        
+        <p-floatlabel variant="in">
+            <p-dropdown 
+                id="campo-formacao"
+                [options]="formacoes"
+                [(ngModel)]="professor.formacao"
+                placeholder="Selecione a Formação">
+            </p-dropdown>
+            <label for="campo-formacao">Formação</label>
+        </p-floatlabel>
+
+
+        <p-floatlabel variant="in">
+            <textarea pTextarea id="campo-pix" [(ngModel)]="professor.chavePix" rows="3" cols="30" style="resize: none" class="h-full"></textarea>
+            <label for="campo-pix"></label>
+        </p-floatlabel>
+        
+        <p-floatlabel variant="in">
+            <p-datepicker 
+            [(ngModel)]="professor.dataNascimento"
+            dateFormat="dd/mm/yy"
+            readonlyInput="true"
+            [minDate]="dataMinima"
+            [maxDate]="dataMaxima"
+            placeholder="Data de Nascimento"
+            />        
+        </p-floatlabel>
+
+        <p-button label="Cadastrar" (click)="cadastrar()"></p-button>
+    </div>
+</div>
+
+
