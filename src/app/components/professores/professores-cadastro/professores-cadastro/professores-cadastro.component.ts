@@ -9,6 +9,9 @@ import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
 import { Router } from '@angular/router';
 import { ProfessorService } from '../../../../services/professor.service';
+import { SelectItem, SelectModule } from 'primeng/select';
+import { DatePicker } from 'primeng/datepicker';
+import { DropdownModule } from 'primeng/dropdown';
 
 @Component({
   selector: 'app-professores-cadastro',
@@ -19,13 +22,29 @@ import { ProfessorService } from '../../../../services/professor.service';
     InputMaskModule,
     ButtonModule,
     ToastModule,
+    SelectModule,
+    DatePicker,
+    DropdownModule
   ],
   templateUrl: './professores-cadastro.component.html',
   styleUrl: './professores-cadastro.component.css',
   providers: [MessageService],
 })
+
+
 export class ProfessoresCadastroComponent {
-  
+
+  dataMaxima: Date;
+  dataMinima: Date;
+  formacoes = [
+  { label: 'Engenharia de Software', value: 'Engenharia de Software' },
+  { label: 'Análise e Desenvolvimento de Sistemas', value: 'Análise e Desenvolvimento de Sistemas' },
+  { label: 'Ciência da Computação', value: 'Ciência da Computação' },
+  { label: 'Sistemas de Informação', value: 'Sistemas de Informação' },
+  { label: 'Engenharia da Computação', value: 'Engenharia da Computação' }
+];
+
+
   professor: ProfessorCadastro;
 
   constructor(
@@ -33,10 +52,15 @@ export class ProfessoresCadastroComponent {
     private messageService: MessageService,
     private router: Router
   ) {
+    let dataHoraAgora = new Date(Date.now());
     this.professor = new ProfessorCadastro();
+    this.dataMinima = new Date(1900, 0, 1);
+    this.dataMaxima = new Date(dataHoraAgora.getFullYear(), dataHoraAgora.getMonth(), dataHoraAgora.getDate(), 23, 59, 59);
   }
 
   cadastrar() {
+    this.professor.formacao;
+    this.definirSigno();
     this.professorService.cadastrar(this.professor).subscribe({
       next: () => this.apresentarMensagemCadastrado(),
       error: erro => console.log("Ocorreu um erro ao cadastrar o professor: " + erro)
@@ -48,12 +72,12 @@ export class ProfessoresCadastroComponent {
     this.router.navigate(["/professores"]);
   }
 
-  definirSigno(){
+  private definirSigno() {
     if (!this.professor.dataNascimento) {
-    this.professor.signo = '';
-    return;
-  }
-    const mes = this.professor.dataNascimento.getMonth();
+      this.professor.signo = '';
+      return;
+    }
+    const mes = this.professor.dataNascimento.getMonth()+1;
     const dia = this.professor.dataNascimento.getDate();
 
     if ((mes === 3 && dia >= 21) || (mes === 4 && dia <= 19)) {
@@ -80,6 +104,6 @@ export class ProfessoresCadastroComponent {
       this.professor.signo = 'Aquário';
     } else if ((mes === 2 && dia >= 19) || (mes === 3 && dia <= 20)) {
       this.professor.signo = 'Peixes';
-    } 
+    }
   }
 }
