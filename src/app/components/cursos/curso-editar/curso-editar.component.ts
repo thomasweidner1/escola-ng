@@ -38,14 +38,14 @@ export class CursoEditarComponent {
   ) {
     this.curso = new CursoEditar
     this.idEditar = parseInt(
-      this.activatedRoute.snapshot.paramMap.get("id")!.toString());
+    this.activatedRoute.snapshot.paramMap.get("id")!.toString());
   }
 
   ngOnInit() {
     this.cursoService.obterPorId(this.idEditar).subscribe({
       next: curso => this.preencherCamposParaEditar(curso),
       error: erro => console.log(
-        "OCorreu ao carregar os dados do curso:" + erro),
+        "Ocorreu um erro ao carregar os dados do curso:" + erro),
     })
   }
 
@@ -56,7 +56,7 @@ export class CursoEditarComponent {
 
   editar() {
     this.cursoService.editar(this.idEditar, this.curso).subscribe({
-      next: aluno => this.apresentarMensagemCadastrado(),
+      next: curso => this.apresentarMensagemCadastrado(),
       error: erro => console.log("Ocorreu um erro ao editar o aluno:" + erro)
     });
   }

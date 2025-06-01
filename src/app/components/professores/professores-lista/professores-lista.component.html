@@ -8,8 +8,8 @@
             (click)="paginaCadastro()"></p-button>
     </div>
 
-    <p-table [value]="professores" [paginator]="true" [loading]="carregandoProfessores" [rows]="40"
-        [rowsPerPageOptions]="[40, 50, 20]" showGridlines stripedRows [tableStyle]="{ 'min-width': '50rem' }">
+    <p-table [value]="professores" [paginator]="true" [loading]="carregandoProfessores" [rows]="20"
+        [rowsPerPageOptions]="[20, 40, 60]" showGridlines stripedRows [tableStyle]="{ 'min-width': '50rem' }">
         <ng-template #header>
             <tr>
                 <th>Código</th>
