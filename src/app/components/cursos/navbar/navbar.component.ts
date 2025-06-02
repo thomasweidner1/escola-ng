@@ -27,8 +27,13 @@ export class NavbarComponent {
       },
       {
         label: 'Cursos',
-        icon: 'pi pi-graduation-cap',
+        icon: 'pi pi-book',
         command: () => this.navegar("/cursos")
+      },
+      {
+        label: 'Formações',
+        icon: 'pi pi-graduation-cap',
+        command: () => this.navegar("/formacoes")
       },
       {
         label: 'Alunos',
@@ -40,11 +45,6 @@ export class NavbarComponent {
         icon: 'pi pi-users',
         command: () => this.navegar("/professores")
       },
-      {
-        label: 'Sobre',
-        icon: 'pi pi-info-circle',
-        command: () => this.navegar("/sobre")
-      }
     ]
   }
 

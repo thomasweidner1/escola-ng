@@ -1,17 +1,19 @@
-import { Injectable } from '@angular/core';
-import { AlunoCadastro } from '../models/aluno-cadastro';
-import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
 import { Aluno } from '../models/aluno';
+import { AlunoCadastro } from '../models/aluno-cadastro';
 
 @Injectable({
   providedIn: 'root'
 })
-export class AlunoService {
+export class FormacaoService {
   private urlApi: string;
 
-  constructor(private http: HttpClient) {
-    this.urlApi = "http://localhost:8000/api/alunos";
+  constructor(
+    private http: HttpClient
+  ) {
+    this.urlApi = "http://localhost:8000/api/formacoes";
   }
 
   cadastrar(alunoCadastro: AlunoCadastro): Observable<any> {
@@ -31,16 +33,5 @@ export class AlunoService {
   alterar(id: number, aluno: Aluno): Observable<any> {
     return this.http.put<any>(`${this.urlApi}/${id}`, aluno);
   }
+
 }
-
-/* HTTP METHODS:
-  get => consultar um item em específico ou uma lista de itens
-  post => criar um item
-  delete => apagar um item específico
-  put => alterar um registro
-
-  200 => ok
-  201 => created (criado)
-  204 => no content => back-end n trouxe nenhum conteúdo, ok a parada
-  404 => não encontrado
-*/

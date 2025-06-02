@@ -6,6 +6,7 @@ import { CursoEditarComponent } from './components/cursos/curso-editar/curso-edi
 import { ProfessoresListaComponent } from './components/professores/professores-lista/professores-lista.component';
 import { ProfessoresCadastroComponent } from './components/professores/professores-cadastro/professores-cadastro/professores-cadastro.component';
 import { ProfessoresEditarComponent } from './components/professores/professores-editar/professores-editar/professores-editar.component';
+import { FormacaoListaComponent } from './components/formacao/formacao-lista/formacao-lista.component';
 
 export const routes: Routes = [
     {path: "cursos", component: CursosListaComponent},
@@ -15,4 +16,5 @@ export const routes: Routes = [
     {path: "professores", component: ProfessoresListaComponent},
     {path: "professores/cadastro", component: ProfessoresCadastroComponent},
     {path: "professores/editar/:id", component: ProfessoresEditarComponent},
+    {path: "formacoes", component: FormacaoListaComponent},
 ];
