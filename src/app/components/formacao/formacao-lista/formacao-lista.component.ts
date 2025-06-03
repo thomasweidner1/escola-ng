@@ -112,7 +112,7 @@ export class FormacaoListaComponent {
     })
   }
   apresentarMensagemApagado(): void {
-    this.messageService.add({ severity: 'success', summary: 'Confirmado', detail: 'Aluno removido com sucesso' });
+    this.messageService.add({ severity: 'success', summary: 'Confirmado', detail: 'Formação removida com sucesso' });
     this.carregarFormacoes();
   }
 

@@ -1,8 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Aluno } from '../models/aluno';
-import { AlunoCadastro } from '../models/aluno-cadastro';
+import { Formacao } from '../models/formacao';
+import { FormacaoCadastro } from '../models/formacao-cadastro';
+
 
 @Injectable({
   providedIn: 'root'
@@ -16,13 +17,13 @@ export class FormacaoService {
     this.urlApi = "http://localhost:8000/api/formacoes";
   }
 
-  cadastrar(alunoCadastro: AlunoCadastro): Observable<any> {
+  cadastrar(formacaoCadastro: FormacaoCadastro): Observable<any> {
     return this.http.post<any>(this.urlApi,
-      alunoCadastro);
+      formacaoCadastro);
   }
 
-  obterTodos(): Observable<Array<Aluno>> {
-    return this.http.get<Array<Aluno>>(this.urlApi);
+  obterTodos(): Observable<Array<Formacao>> {
+    return this.http.get<Array<Formacao>>(this.urlApi);
   }
 
   apagar(id: number): Observable<any> {
@@ -30,8 +31,8 @@ export class FormacaoService {
     // return this.http.delete<any>(this.urlApi + "/" + id);
   }
 
-  alterar(id: number, aluno: Aluno): Observable<any> {
-    return this.http.put<any>(`${this.urlApi}/${id}`, aluno);
+  alterar(id: number, formacao: Formacao): Observable<any> {
+    return this.http.put<any>(`${this.urlApi}/${id}`, formacao);
   }
 
 }
