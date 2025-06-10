@@ -10,6 +10,8 @@ import { InputMaskModule } from 'primeng/inputmask';
 import { ButtonModule } from 'primeng/button';
 import { ToastModule } from 'primeng/toast';
 import { Curso } from '../../../models/curso';
+import { Matricula, MatriculaCadastrar } from '../../../models/matricula';
+import { TableModule } from 'primeng/table';
 
 @Component({
   selector: 'app-curso-editar',
@@ -20,6 +22,7 @@ import { Curso } from '../../../models/curso';
     InputMaskModule,
     ButtonModule,
     ToastModule,
+    TableModule
   ],
   templateUrl: './curso-editar.component.html',
   styleUrl: './curso-editar.component.css',
@@ -29,6 +32,9 @@ export class CursoEditarComponent {
 
   curso: CursoEditar;
   idEditar: number;
+  matriculaCadastrar: MatriculaCadastrar;
+  modalCadastrarVisivel: boolean;
+  matriculas: Matricula[];
 
   constructor(
     private router: Router,
@@ -39,6 +45,9 @@ export class CursoEditarComponent {
     this.curso = new CursoEditar
     this.idEditar = parseInt(
     this.activatedRoute.snapshot.paramMap.get("id")!.toString());
+    this.matriculaCadastrar = new MatriculaCadastrar();
+    this.modalCadastrarVisivel = false;
+    this.matriculas = [];
   }
 
   ngOnInit() {
@@ -67,6 +76,9 @@ export class CursoEditarComponent {
       detail: 'Curso alterado com sucesso'
     });
     this.router.navigate(["/cursos"]);
+  }
+  abrirModalRegistrarMatricula(){
+
   }
 
 }
