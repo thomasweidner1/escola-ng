@@ -1,7 +1,7 @@
 <div class="flex justify-content-between flex-wrap">
     <div class="flex flex-column gap-4">
         <p-floatlabel>
-            <input pInputText id="campo-nome" [(ngModel)]="curso.nome" autocomplete="off">
+            <input pInputText id="campo-nome" [(ngModel)]="curso.nome" autocomplete="off" />
             <label for="campo-nome">Nome</label>
         </p-floatlabel>
 
@@ -12,9 +12,10 @@
 
         <p-button label="Editar" icon="pi pi-save" (click)="editar()"></p-button>
     </div>
+
     <div class="flex flex-column">
         <div class="flex justify-content-end mb-2">
-            <p-button label="Registrar Matrícula" severity="info" icon="pi pi-plus"
+            <p-button label="Registrar Matricula" severity="info" icon="pi pi-plus"
                 (click)="abrirModalRegistrarMatricula()"></p-button>
         </div>
 
@@ -23,7 +24,7 @@
                 <tr>
                     <th>Código</th>
                     <th>Aluno</th>
-                    <th>Data Matrícula</th>
+                    <th>Data Matricula</th>
                     <th>Ação</th>
                 </tr>
             </ng-template>
@@ -33,13 +34,33 @@
                     <td>{{ matricula.aluno.nome }}</td>
                     <td>{{ matricula.dataMatricula }}</td>
                     <td>
-                        <!-- <p-button label="Editar" (click)="redirecionarPaginaEditar(matricula.id)" severity="warn"
-                            class="mr-2" icon="pi pi-pencil"></p-button>
-                        <p-button label="Apagar" (click)="confirmarParaApagar($event, matricula.id)" severity="danger"
-                            icon="pi pi-trash"></p-button> -->
+                        <!-- <p-button label="Editar" (click)="redirecionarEditar(matricula.id)" severity="warn"
+                            icon="pi pi-pencil" class="mr-2" />
+                        <p-button label="Apagar" (click)="confirmarParaApagar($event, matricula.id)" icon="pi pi-trash"
+                            severity="danger" /> -->
                     </td>
                 </tr>
             </ng-template>
         </p-table>
     </div>
 </div>
+
+<p-dialog header="Matricular Aluno" [modal]="true" [(visible)]="modalCadastrarVisivel" [style]="{ width: '25rem' }">
+
+    <div class="flex items-center gap-4 mb-2">
+        <label for="campo-aluno" class="font-semibold w-24">Aluno</label>
+        <!-- 
+            options => é a lista de itens que o usuário poderá escolher
+            optionsLabel => é apropriedade que o usuário visualizará para escolher (usuário escolhe por nome)
+            optionValue => é o valor que o usuário escolheu (armazena o id do que foi escolhido)
+        -->
+        <p-select [options]="alunos" [(ngModel)]="matriculaCadastrar.alunoId" appendTo="body" [filter]="true"
+            optionLabel="nomeCompleto" optionValue="id" filterBy="nomeCompleto" placeholder="Escolha o aluno"
+            class="w-full md:w-56" />
+    </div>
+
+    <div class="flex justify-end justify-content-end gap-2">
+        <p-button label="Cancelar" icon="pi pi-times" severity="secondary" (click)="modalCadastrarVisivel = false" />
+        <p-button label="Matricular" icon="pi pi-save" />
+    </div>
+</p-dialog>
